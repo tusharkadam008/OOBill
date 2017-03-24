@@ -48,6 +48,12 @@ public class Logout extends JFrame {
 		contentPane.add(lblDoYouReally);
 		
 		JButton btnYes = new JButton("YES");
+		btnYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//contentPane.dispose();
+				//project.setVisible(true);
+			}
+		});
 		btnYes.setBounds(46, 138, 97, 25);
 		contentPane.add(btnYes);
 		
@@ -55,8 +61,10 @@ public class Logout extends JFrame {
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane.setLayout(null);
-				contentPane.setVisibile(false);
- 
+				//contentPane.
+				//admin.setVisible(true);
+				Admin admin1=new Admin();
+				admin1.remove(contentPane);
 			}
 		});
 		btnNo.setBounds(261, 138, 97, 25);

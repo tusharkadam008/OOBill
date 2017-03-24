@@ -109,8 +109,9 @@ public class Admin extends JFrame {
 		JMenuItem mntmLogout = new JMenuItem("Logout");
 		mntmLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Logout logout=new Logout();
-				logout.setVisible(true);
+				this.dispose();
+				//Project p1=new Project();
+				//p1.setVisible(true);
 			}
 		});
 		mnLogout.add(mntmLogout);
