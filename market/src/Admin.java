@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
+import javax.swing.JButton;
 
 public class Admin extends JFrame {
 
@@ -67,17 +68,36 @@ public class Admin extends JFrame {
 		JMenu mnManagebills = new JMenu("Manage Bills");
 		menuBar.add(mnManagebills);
 		
+		JMenuItem mntmManageBills = new JMenuItem("Manage Bills");
+		mntmManageBills.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				managingBill mb = new managingBill();
+				mb.setVisible(true);
+			}
+		});
+		mnManagebills.add(mntmManageBills);
+		
 		JMenu mnInventory = new JMenu("Inventory");
 		menuBar.add(mnInventory);
 		
-		JMenuItem mntmUpdate = new JMenuItem("Update");
-		mntmUpdate.addActionListener(new ActionListener() {
+		JMenuItem mntmAddItem = new JMenuItem("Add item");
+		mntmAddItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Inventory inventory=new Inventory();
-				inventory.setVisible(true);
+				Inventory invntry=new Inventory();
+				invntry.setVisible(true);
+				
 			}
 		});
-		mnInventory.add(mntmUpdate);
+		mnInventory.add(mntmAddItem);
+		
+		JMenuItem mntmUpdateQuantity = new JMenuItem("Update quantity");
+		mntmUpdateQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UpdateQuantity upqnty =new UpdateQuantity();
+				upqnty.setVisible(true);
+			}
+		});
+		mnInventory.add(mntmUpdateQuantity);
 		
 		JMenu mnSalesReport = new JMenu("Sales Report");
 		menuBar.add(mnSalesReport);
@@ -109,7 +129,8 @@ public class Admin extends JFrame {
 		JMenuItem mntmLogout = new JMenuItem("Logout");
 		mntmLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				this.dispose();
+				Logout log=new Logout();
+				log.setVisible(true);
 				//Project p1=new Project();
 				//p1.setVisible(true);
 			}

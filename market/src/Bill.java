@@ -64,12 +64,8 @@ public class Bill extends JFrame {
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JLabel lblCustomersName = new JLabel("Customer's Name");
-		lblCustomersName.setBounds(91, 82, 96, 14);
-		contentPane.add(lblCustomersName);
-		
 		textField_2 = new JTextField();
-		textField_2.setBounds(192, 79, 86, 20);
+		textField_2.setBounds(202, 96, 86, 20);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 		
@@ -88,5 +84,13 @@ public class Bill extends JFrame {
 		table = new JTable();
 		table.setBounds(37, 288, 337, 81);
 		contentPane.add(table);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setBounds(335, 78, 89, 23);
+		contentPane.add(btnBack);
+		
+		JLabel lblCustomername = new JLabel("CustomerName");
+		lblCustomername.setBounds(32, 92, 121, 28);
+		contentPane.add(lblCustomername);
 	}
 }

@@ -12,8 +12,6 @@ import java.awt.event.ActionEvent;
 
 public class Staff extends JFrame {
 
-	private JPanel contentPane;
-
 	/**
 	 * Launch the application.
 	 */
@@ -41,29 +39,52 @@ public class Staff extends JFrame {
 		menuBar.setBorderPainted(false);
 		setJMenuBar(menuBar);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Create Bill");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		JMenu menu = new JMenu("");
+		menuBar.add(menu);
+		
+		JMenu mnBilling = new JMenu("Billing");
+		menuBar.add(mnBilling);
+		
+		JMenuItem mntmCreateBill = new JMenuItem("Create Bill");
+		mntmCreateBill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Bill bill=new Bill();
-				bill.setVisible(true);
+				Bill bl=new Bill();
+				bl.setVisible(true);
 			}
 		});
-		menuBar.add(mntmNewMenuItem);
+		mnBilling.add(mntmCreateBill);
+		
+		JMenuItem mntmViewBill = new JMenuItem("View Bill");
+		mntmViewBill.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				managingBill mngbill =new managingBill();
+				mngbill.setVisible(true);
+			}
+		});
+		mnBilling.add(mntmViewBill);
+		
+		JMenu mnLogout = new JMenu("Logout");
+		menuBar.add(mnLogout);
 		
 		JMenuItem mntmChangePassword = new JMenuItem("Change Password");
 		mntmChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Changepwd changepwd=new Changepwd();
-				changepwd.setVisible(true);
+				Changepwd cpwd=new Changepwd();
+				cpwd.setVisible(true);
 			}
 		});
-		menuBar.add(mntmChangePassword);
+		mnLogout.add(mntmChangePassword);
 		
-		JMenu menu = new JMenu("");
-		menuBar.add(menu);
-		contentPane = new JPanel();
-		menuBar.add(contentPane);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
+		JMenuItem mntmLogout = new JMenuItem("Logout");
+		mntmLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Logout lgt=new Logout();
+				lgt.setVisible(true);
+			}
+		});
+		mnLogout.add(mntmLogout);
+		
+		JMenuBar menuBar_1 = new JMenuBar();
+		menuBar.add(menuBar_1);
 	}
 }
