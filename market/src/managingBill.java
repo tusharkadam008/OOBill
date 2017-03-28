@@ -23,6 +23,7 @@ public class managingBill extends JFrame {
 				try {
 					managingBill frame = new managingBill();
 					frame.setVisible(true);
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -34,7 +35,7 @@ public class managingBill extends JFrame {
 	 * Create the frame.
 	 */
 	public managingBill() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		setBounds(100, 100, 456, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -1,5 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Inventory extends JFrame {
 
@@ -21,11 +27,33 @@ public class Inventory extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	Connection myConn;
+	Statement st;
+	ResultSet myRs;
+
+	
 	public static void main(String[] args) {
+		
+		try{
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+			Statement st = myConn.createStatement();
+			ResultSet myRs = st.executeQuery("select * from inventory");
+			System.out.println("ID" + "\t" + "NAME" + "\t" + "PRICE" +"\t" + "QUANTITY");
+			while(myRs.next()){
+				System.out.println(myRs.getString("item_id")+"\t"+ myRs.getString("item_name") +"\t" + myRs.getString("price")+"\t"+ myRs.getString("quantity"));
+			}
+		}
+		catch (Exception exc){
+			exc.printStackTrace();
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Inventory frame = new Inventory();
+					//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -82,6 +110,28 @@ public class Inventory extends JFrame {
 		textField_3.setColumns(10);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String aa = textField.getText();
+				String bb = textField_1.getText();
+				String cc = textField_2.getText();
+				String dd = textField_3.getText();
+
+				//String q ="insert into inventory values(\'";
+				String t = "insert into inventory values(\"" +aa+"\",\""+bb+"\",\""+cc+"\",\""+dd+"\");";	
+				//String t = q+aa+"\","+bb+",\""+cc+"\","+dd+"\")";
+					try
+						{
+						int i = st.executeUpdate(t);
+						}
+						catch(Exception ax)
+						{
+						System.out.println(ax.toString());
+						}
+
+			}
+		});
 		btnAdd.setBounds(174, 118, 89, 23);
 		contentPane.add(btnAdd);
 		

@@ -12,6 +12,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.*;
 
 public class Project {
 
@@ -22,7 +23,22 @@ public class Project {
 	/**
 	 * Launch the application.
 	 */
+	
+	
 	public static void main(String[] args) {
+		
+		try{
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery("select * from staff");
+			System.out.println("ID" + "\t" + "NAME");
+			while(myRs.next()){
+				System.out.println(myRs.getString("id")+"\t"+ myRs.getString("name"));
+			}
+		}
+		catch (Exception exc){
+			exc.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -63,7 +79,7 @@ public class Project {
 		JButton btnAdminLogin = new JButton("Admin Login");
 		btnAdminLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
+				//frame.dispose();
 				Admin admin=new Admin();
 				admin.setVisible(true);
 				
@@ -76,9 +92,37 @@ public class Project {
 		JButton btnUserLogin = new JButton("Staff Login");
 		btnUserLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
-				Staff staff=new Staff();
-				staff.setVisible(true);	
+				
+			
+				String a=textField.getText();
+				int d =Integer.valueOf(a);
+				String b=passwordField.getText();
+				int e =Integer.valueOf(b);
+				try
+				{
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+					Statement myStmt = myConn.createStatement();
+					ResultSet rs = myStmt.executeQuery("select * from staff;");
+				
+					while (rs.next())
+					{
+						if (rs.getInt(1)==(d) && rs.getInt(3)==(e)){
+					
+							
+								frame.dispose();
+								Staff staff=new Staff();
+								staff.setVisible(true);
+								
+						
+						}
+					}
+				}
+				catch(SQLException cx)
+				{
+					System.out.println(cx.toString());
+				}
+
+				
 			}
 		});
 		btnUserLogin.setFont(new Font("Tahoma", Font.PLAIN, 16));

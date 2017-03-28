@@ -6,6 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -23,6 +27,20 @@ public class Bill extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		try{
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery("select * from bill");
+			System.out.println("BILL_NO" + "\t" + "USERNAME" + "\t" + "DATE" +"\t" + "AMOUNT");
+			while(myRs.next()){
+				System.out.println(myRs.getString("bill_no")+"\t"+ myRs.getString("username") +"\t" + myRs.getString("date")+"\t"+ myRs.getString("amount"));
+			}
+		}
+		catch (Exception exc){
+			exc.printStackTrace();
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
