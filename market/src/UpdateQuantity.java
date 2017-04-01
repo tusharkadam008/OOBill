@@ -7,6 +7,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
 
 public class UpdateQuantity extends JFrame {
 
@@ -60,10 +67,6 @@ public class UpdateQuantity extends JFrame {
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JButton btnChoose = new JButton("Choose");
-		btnChoose.setBounds(179, 61, 89, 23);
-		contentPane.add(btnChoose);
-		
 		JLabel lblUpdateQuantity = new JLabel("Update Quantity");
 		lblUpdateQuantity.setBounds(29, 137, 104, 14);
 		contentPane.add(lblUpdateQuantity);
@@ -74,6 +77,46 @@ public class UpdateQuantity extends JFrame {
 		textField_2.setColumns(10);
 		
 		JButton btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				String a=textField.getText();
+				String b=textField_1.getText();
+				String c=textField_2.getText();
+				
+				int g =Integer.valueOf(b);
+				int f =Integer.valueOf(c);
+				
+				String t ="UPDATE inventory SET quantity = \"" +f+ "\"WHERE item_id =\"" + g + "\";";
+				
+				try
+				{
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+					Statement myStmt = myConn.createStatement();
+					ResultSet rs = myStmt.executeQuery("select * from inventory;");
+					int flag=0;
+					while (rs.next())
+					{
+						if (rs.getInt(1)==(g)){
+							
+							 myStmt.executeUpdate(t);	
+							 flag=1;
+							 System.out.println("Updated quantity!");
+						
+						}
+						
+							
+						
+					}
+					if(flag==0)
+					System.out.println("incorrect product id");
+				}
+				catch(SQLException cx)
+				{
+					System.out.println(cx.toString());
+				}
+			}
+		});
 		btnUpdate.setBounds(179, 182, 89, 23);
 		contentPane.add(btnUpdate);
 	}

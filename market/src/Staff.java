@@ -59,30 +59,22 @@ public class Staff extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				managingBill mngbill =new managingBill();
 				mngbill.setVisible(true);
+				
+				
+				
+				
 			}
 		});
 		mnBilling.add(mntmViewBill);
 		
-		JMenu mnLogout = new JMenu("Logout");
-		menuBar.add(mnLogout);
-		
 		JMenuItem mntmChangePassword = new JMenuItem("Change Password");
+		menuBar.add(mntmChangePassword);
 		mntmChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Changepwd cpwd=new Changepwd();
 				cpwd.setVisible(true);
 			}
 		});
-		mnLogout.add(mntmChangePassword);
-		
-		JMenuItem mntmLogout = new JMenuItem("Logout");
-		mntmLogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Logout lgt=new Logout();
-				lgt.setVisible(true);
-			}
-		});
-		mnLogout.add(mntmLogout);
 		
 		JMenuBar menuBar_1 = new JMenuBar();
 		menuBar.add(menuBar_1);

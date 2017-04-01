@@ -9,6 +9,11 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
 public class Salesreport extends JFrame {
@@ -49,15 +54,51 @@ public class Salesreport extends JFrame {
 		contentPane.add(lblEnterDateddmmyyyy);
 		
 		textField = new JTextField();
-		textField.setBounds(256, 96, 116, 22);
+		textField.setBounds(255, 96, 116, 22);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnShowSales = new JButton("Show Sales");
 		btnShowSales.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-				Sales sales=new Sales();
-				sales.setVisible(true);
+				String a=textField.getText();
+				
+				//String t ="SELECT bill SET quantity = \"" +f+ "\"WHERE item_id =\"" + g + "\";";
+				
+				try
+				{
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+					Statement myStmt = myConn.createStatement();
+					ResultSet rs = myStmt.executeQuery("select * from bill;");
+					int i=0;
+					while (rs.next())
+					{
+						if (rs.getString(3).equals(a)){
+							
+							 i=i+rs.getInt(4);	
+							 
+						}
+						
+					} 
+					if(i==0){
+						System.out.println("Date not found\n");
+					}
+					else{
+						 System.out.println("Total sale:" + i);
+					}
+					
+				}
+				catch(SQLException cx)
+				{
+					System.out.println(cx.toString());
+				}
+				
+				
+				
+				
+				//Sales sales=new Sales();
+				//sales.setVisible(true);
 			}
 		});
 		btnShowSales.setBounds(127, 142, 157, 25);

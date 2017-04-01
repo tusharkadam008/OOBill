@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 public class Logout extends JFrame {
 
 	private JPanel contentPane;
-
 	/**
 	 * Launch the application.
 	 */
@@ -50,8 +49,8 @@ public class Logout extends JFrame {
 		JButton btnYes = new JButton("YES");
 		btnYes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//contentPane.dispose();
-				//project.setVisible(true);
+				
+				
 			}
 		});
 		btnYes.setBounds(46, 138, 97, 25);

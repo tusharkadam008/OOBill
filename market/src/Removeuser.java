@@ -9,17 +9,36 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
 
 public class Removeuser extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		try{
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery("select * from staff");
+			System.out.println("ID" + "\t" + "NAME");
+			while(myRs.next()){
+				System.out.println(myRs.getString("id")+"\t"+ myRs.getString("name"));
+			}
+		}
+		catch (Exception exc){
+			exc.printStackTrace();
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -53,22 +72,30 @@ public class Removeuser extends JFrame {
 		label.setBounds(131, 113, 94, 25);
 		panel.add(label);
 		
-		JLabel label_1 = new JLabel("Password");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label_1.setBounds(131, 176, 94, 28);
-		panel.add(label_1);
-		
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textField.setColumns(10);
 		textField.setBounds(276, 113, 133, 24);
 		panel.add(textField);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(276, 180, 133, 22);
-		panel.add(passwordField);
-		
 		JButton btnRemoveUser = new JButton("Remove User");
+		btnRemoveUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				String q2 = "delete from staff where id=";
+				String bb=textField.getText();
+				String t=q2+bb;
+				try{
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+					Statement myStmt = myConn.createStatement();
+					int j=myStmt.executeUpdate(t);
+				}
+				catch(Exception bx){
+					System.out.println(bx.toString());
+				}
+			}
+		});
 		btnRemoveUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnRemoveUser.setBounds(197, 293, 133, 35);
 		panel.add(btnRemoveUser);

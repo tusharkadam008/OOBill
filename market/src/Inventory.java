@@ -27,10 +27,6 @@ public class Inventory extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	
-	Connection myConn;
-	Statement st;
-	ResultSet myRs;
 
 	
 	public static void main(String[] args) {
@@ -74,38 +70,38 @@ public class Inventory extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblProductName = new JLabel("Product Name");
-		lblProductName.setBounds(22, 23, 77, 22);
+		lblProductName.setBounds(22, 23, 97, 22);
 		contentPane.add(lblProductName);
 		
 		textField = new JTextField();
-		textField.setBounds(112, 24, 86, 20);
+		textField.setBounds(135, 24, 86, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblProductId = new JLabel("Product id");
-		lblProductId.setBounds(230, 27, 69, 18);
+		lblProductId.setBounds(257, 25, 69, 18);
 		contentPane.add(lblProductId);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(309, 24, 86, 20);
+		textField_1.setBounds(338, 24, 86, 20);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel lblPrice = new JLabel("Price");
-		lblPrice.setBounds(22, 76, 46, 14);
+		lblPrice.setBounds(22, 76, 97, 14);
 		contentPane.add(lblPrice);
 		
 		JLabel lblQuantity = new JLabel("Quantity");
-		lblQuantity.setBounds(230, 76, 46, 14);
+		lblQuantity.setBounds(257, 76, 69, 14);
 		contentPane.add(lblQuantity);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(112, 73, 86, 20);
+		textField_2.setBounds(135, 73, 86, 20);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(309, 73, 86, 20);
+		textField_3.setBounds(338, 73, 86, 20);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
@@ -113,8 +109,8 @@ public class Inventory extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String aa = textField.getText();
-				String bb = textField_1.getText();
+				String bb = textField.getText();
+				String aa = textField_1.getText();
 				String cc = textField_2.getText();
 				String dd = textField_3.getText();
 
@@ -123,6 +119,8 @@ public class Inventory extends JFrame {
 				//String t = q+aa+"\","+bb+",\""+cc+"\","+dd+"\")";
 					try
 						{
+						Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+						Statement st = myConn.createStatement();
 						int i = st.executeUpdate(t);
 						}
 						catch(Exception ax)

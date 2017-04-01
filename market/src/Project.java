@@ -24,7 +24,7 @@ public class Project {
 	 * Launch the application.
 	 */
 	
-	
+
 	public static void main(String[] args) {
 		
 		try{
@@ -79,11 +79,32 @@ public class Project {
 		JButton btnAdminLogin = new JButton("Admin Login");
 		btnAdminLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//frame.dispose();
-				Admin admin=new Admin();
-				admin.setVisible(true);
 				
-			}
+				
+				
+				String a=textField.getText();
+				int d =Integer.valueOf(a);
+				String b=passwordField.getText();
+				int e =Integer.valueOf(b);
+				try
+				{		
+					if(d==0000 && e==0000)
+					{
+						//frame.dispose();
+						Admin admin=new Admin();
+						admin.setVisible(true);
+					}	
+					else
+					{
+						System.out.println("Invalid id or password!");
+					}
+				}
+				catch (Exception f) {
+					f.printStackTrace();
+				}
+				
+			
+			}	
 		});
 		btnAdminLogin.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAdminLogin.setBounds(78, 106, 162, 40);
@@ -112,9 +133,10 @@ public class Project {
 								frame.dispose();
 								Staff staff=new Staff();
 								staff.setVisible(true);
-								
-						
 						}
+						else
+							System.out.println("Invalid id or password!");
+						break;
 					}
 				}
 				catch(SQLException cx)
