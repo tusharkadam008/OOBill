@@ -8,6 +8,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
 public class Staff extends JFrame {
@@ -32,7 +36,7 @@ public class Staff extends JFrame {
 	 * Create the frame.
 	 */
 	public Staff() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 593, 433);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -48,24 +52,35 @@ public class Staff extends JFrame {
 		JMenuItem mntmCreateBill = new JMenuItem("Create Bill");
 		mntmCreateBill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				for(int i=0; i<100; i++){
+					System.out.println();
+					
+				}
+				
+				try{
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+					Statement myStmt = myConn.createStatement();
+					ResultSet myRs = myStmt.executeQuery("select * from inventory;");
+					System.out.println("ITEMID   " + "ITEMNAME  " + "PRICE  "+ "QUANTITY");
+					while(myRs.next()){
+						System.out.println(myRs.getString("item_id")+"\t"+ myRs.getString("item_name") +"\t" + myRs.getString("price")+"\t"+ myRs.getString("quantity"));
+					}
+				}
+				catch (Exception exc){
+					exc.printStackTrace();
+				}
+				
+				System.out.println();
+				System.out.println("ITEMID   " + "ITEMNAME  " + "PRICE  "+ "QUANTITY");
+				System.out.println();
+			
+				
 				Bill bl=new Bill();
 				bl.setVisible(true);
 			}
 		});
 		mnBilling.add(mntmCreateBill);
-		
-		JMenuItem mntmViewBill = new JMenuItem("View Bill");
-		mntmViewBill.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				managingBill mngbill =new managingBill();
-				mngbill.setVisible(true);
-				
-				
-				
-				
-			}
-		});
-		mnBilling.add(mntmViewBill);
 		
 		JMenuItem mntmChangePassword = new JMenuItem("Change Password");
 		menuBar.add(mntmChangePassword);

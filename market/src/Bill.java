@@ -27,12 +27,13 @@ public class Bill extends JFrame {
 	private JTextField textField_3;
 	static int amount=0;
 	private JTextField textField_4;
+	private JTextField textField_5;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		
-	/*	try{
+		try{
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
 			Statement myStmt = myConn.createStatement();
 			ResultSet myRs = myStmt.executeQuery("select * from inventory;");
@@ -44,7 +45,10 @@ public class Bill extends JFrame {
 		catch (Exception exc){
 			exc.printStackTrace();
 		}
-	*/	System.out.println("ITEMID   " + "ITEMNAME  " + "PRICE  "+ "QUANTITY");
+		
+	
+		System.out.println("ITEMID   " + "ITEMNAME  " + "PRICE  "+ "QUANTITY");
+		System.out.println();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -61,8 +65,8 @@ public class Bill extends JFrame {
 	 * Create the frame.
 	 */
 	public Bill() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 538, 588);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 426, 554);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -73,12 +77,12 @@ public class Bill extends JFrame {
 		contentPane.add(lblBillNo);
 		
 		textField = new JTextField();
-		textField.setBounds(202, 31, 86, 20);
+		textField.setBounds(202, 31, 116, 23);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(202, 96, 86, 20);
+		textField_2.setBounds(202, 96, 116, 23);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 		
@@ -89,6 +93,8 @@ public class Bill extends JFrame {
 				String a= textField_1.getText();
 				String b = textField_3.getText(); 
 				int g=Integer.valueOf(b);
+				textField_1.setText("");
+				textField_3.setText("");
 				int h=0,p=0;
 				int qf=0;
 				String q=null;
@@ -164,11 +170,15 @@ public class Bill extends JFrame {
 			
 			}	
 		});
-		btnAdd.setBounds(202, 256, 89, 23);
+	//	console clear	
+	//	final  String ESC = "\033[";
+	//	System.out.print(ESC + "2J"); 
+		
+		btnAdd.setBounds(48, 448, 89, 23);
 		contentPane.add(btnAdd);
 		
 		JLabel lblCustomername = new JLabel("CustomerName");
-		lblCustomername.setBounds(32, 92, 121, 28);
+		lblCustomername.setBounds(32, 93, 121, 28);
 		contentPane.add(lblCustomername);
 		
 		JLabel lblNewLabel = new JLabel("Item id");
@@ -176,16 +186,16 @@ public class Bill extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(121, 172, 116, 22);
+		textField_1.setBounds(202, 172, 116, 22);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("quantity");
-		lblNewLabel_1.setBounds(261, 178, 56, 16);
+		lblNewLabel_1.setBounds(32, 318, 56, 16);
 		contentPane.add(lblNewLabel_1);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(361, 172, 116, 22);
+		textField_3.setBounds(202, 315, 116, 22);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
@@ -196,6 +206,39 @@ public class Bill extends JFrame {
 				String aa = textField.getText();
 				String bb = textField_2.getText();
 				String cc = textField_4.getText();
+				String dd = textField_5.getText();
+				textField.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+				textField_4.setText("");
+				textField_5.setText("");
+					//for applying tax
+				int tax=0;
+				try
+				{
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+					Statement myStmt = myConn.createStatement();
+					ResultSet myrs = myStmt.executeQuery("select * from tax;");
+					while (myrs.next())
+					{
+						if (myrs.getString(1).equals(dd)){
+							
+							tax=myrs.getInt(2);
+							 
+							 //System.out.println("Updated quantity!");
+						
+						}
+					}
+					
+				}
+				catch(Exception ax)
+				{
+					System.out.println(ax.toString());
+				}
+				System.out.println();
+				amount=amount +(tax*amount)/100;		
+				System.out.println("TOTAL AMOUNT: "+amount);
 				
 				String q1 = "insert into bill Values(\"";
 				String t = q1 +aa+"\",\""+bb+"\",\""+cc+"\",\""+amount+"\");";
@@ -211,20 +254,29 @@ public class Bill extends JFrame {
 					System.out.println(ax.toString());
 				}
 			
-							
-				System.out.println("TOTAL AMOUNT: "+amount);
+				
+				
 			}
 		});
-		btnCreate.setBounds(202, 319, 97, 25);
+		btnCreate.setBounds(187, 447, 97, 25);
 		contentPane.add(btnCreate);
 		
 		JLabel lblDate = new JLabel("Date");
-		lblDate.setBounds(317, 60, 56, 16);
+		lblDate.setBounds(32, 251, 56, 16);
 		contentPane.add(lblDate);
 		
 		textField_4 = new JTextField();
-		textField_4.setBounds(361, 57, 116, 22);
+		textField_4.setBounds(202, 248, 116, 22);
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
+		
+		JLabel lblTaxId = new JLabel("Tax ID");
+		lblTaxId.setBounds(32, 378, 56, 16);
+		contentPane.add(lblTaxId);
+		
+		textField_5 = new JTextField();
+		textField_5.setBounds(202, 375, 116, 22);
+		contentPane.add(textField_5);
+		textField_5.setColumns(10);
 	}
 }

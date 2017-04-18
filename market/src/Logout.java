@@ -34,7 +34,7 @@ public class Logout extends JFrame {
 	 * Create the frame.
 	 */
 	public Logout() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -51,6 +51,7 @@ public class Logout extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
+				
 			}
 		});
 		btnYes.setBounds(46, 138, 97, 25);
@@ -59,11 +60,11 @@ public class Logout extends JFrame {
 		JButton btnNo = new JButton("NO");
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane.setLayout(null);
-				//contentPane.
-				//admin.setVisible(true);
-				Admin admin1=new Admin();
-				admin1.remove(contentPane);
+			
+				//	contentPane.setLayout(null);
+				//frame.setVisible(false);
+			//	Admin admin1=new Admin();
+				//admin1.remove(contentPane);
 			}
 		});
 		btnNo.setBounds(261, 138, 97, 25);

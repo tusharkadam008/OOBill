@@ -28,7 +28,6 @@ public class Inventory extends JFrame {
 	 * Launch the application.
 	 */
 
-	
 	public static void main(String[] args) {
 		
 		try{
@@ -62,12 +61,15 @@ public class Inventory extends JFrame {
 	 * Create the frame.
 	 */
 	public Inventory() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//	super("hello");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		setBounds(100, 100, 454, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 		
 		JLabel lblProductName = new JLabel("Product Name");
 		lblProductName.setBounds(22, 23, 97, 22);
@@ -113,6 +115,23 @@ public class Inventory extends JFrame {
 				String aa = textField_1.getText();
 				String cc = textField_2.getText();
 				String dd = textField_3.getText();
+				
+				textField.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
+				textField_3.setText("");
+				try{
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+					Statement st = myConn.createStatement();
+					ResultSet myRs = st.executeQuery("select * from inventory");
+					System.out.println("ID" + "\t" + "NAME" + "\t" + "PRICE" +"\t" + "QUANTITY");
+					while(myRs.next()){
+						System.out.println(myRs.getString("item_id")+"\t"+ myRs.getString("item_name") +"\t" + myRs.getString("price")+"\t"+ myRs.getString("quantity"));
+					}
+				}
+				catch (Exception exc){
+					exc.printStackTrace();
+				} 
 
 				//String q ="insert into inventory values(\'";
 				String t = "insert into inventory values(\"" +aa+"\",\""+bb+"\",\""+cc+"\",\""+dd+"\");";	
@@ -122,6 +141,8 @@ public class Inventory extends JFrame {
 						Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
 						Statement st = myConn.createStatement();
 						int i = st.executeUpdate(t);
+						
+						System.out.println(aa+"\t"+ bb +"\t" + cc +"\t"+ dd);
 						}
 						catch(Exception ax)
 						{
@@ -132,9 +153,7 @@ public class Inventory extends JFrame {
 		});
 		btnAdd.setBounds(174, 118, 89, 23);
 		contentPane.add(btnAdd);
-		
-		table = new JTable();
-		table.setBounds(22, 167, 373, 148);
-		contentPane.add(table);
+	//add(contentPane);
+	//this.setVisible(true);
 	}
 }

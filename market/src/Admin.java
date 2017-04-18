@@ -9,6 +9,10 @@ import javax.swing.JMenu;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
 import javax.swing.JButton;
@@ -38,7 +42,7 @@ public class Admin extends JFrame {
 	 * Create the frame.
 	 */
 	public Admin() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 826, 628);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -59,6 +63,9 @@ public class Admin extends JFrame {
 		JMenuItem mntmRemoveUser = new JMenuItem("Remove User");
 		mntmRemoveUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				for(int i=0; i<100; i++){
+					System.out.println();
+				}
 				Removeuser removeuser=new Removeuser();
 				removeuser.setVisible(true);
 			}
@@ -68,14 +75,31 @@ public class Admin extends JFrame {
 		JMenu mnManagebills = new JMenu("Manage Bills");
 		menuBar.add(mnManagebills);
 		
-		JMenuItem mntmManageBills = new JMenuItem("Manage Bills");
-		mntmManageBills.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				managingBill mb = new managingBill();
-				mb.setVisible(true);
+		JMenuItem mntmManagebills = new JMenuItem("Managebills");
+		mntmManagebills.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try{
+					for(int i=0; i<10; i++)
+						System.out.println();
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
+					Statement myStmt = myConn.createStatement();
+					ResultSet myRs = myStmt.executeQuery("select * from bill");
+					System.out.println("NO." + "\t" + "NAME"+ "\t" +"DATE"+ "\t\t\t" +"AMT");
+					System.out.println();
+					while(myRs.next()){
+						System.out.println(myRs.getString("bill_no")+"\t"+ myRs.getString("username")+"\t"+ myRs.getString("date")+"\t"+"\t"+ myRs.getString("amount"));
+					}
+				}
+				catch (Exception exc){
+					exc.printStackTrace();
+				}
+				
+			//	Managebills managebills=new Managebills();
+			//	managebills.setVisible(true);
 			}
 		});
-		mnManagebills.add(mntmManageBills);
+		mnManagebills.add(mntmManagebills);
 		
 		JMenu mnInventory = new JMenu("Inventory");
 		menuBar.add(mnInventory);
@@ -122,20 +146,6 @@ public class Admin extends JFrame {
 			}
 		});
 		mnTax.add(mntmChangeTax);
-		
-		JMenu mnLogout = new JMenu("Logout");
-		menuBar.add(mnLogout);
-		
-		JMenuItem mntmLogout = new JMenuItem("Logout");
-		mntmLogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Logout log=new Logout();
-				log.setVisible(true);
-				//Project p1=new Project();
-				//p1.setVisible(true);
-			}
-		});
-		mnLogout.add(mntmLogout);
 		contentPane = new JPanel();
 		contentPane.setForeground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

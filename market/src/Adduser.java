@@ -58,7 +58,7 @@ public class Adduser extends JFrame {
 	 * Create the frame.
 	 */
 	public Adduser() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 534, 488);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -97,6 +97,10 @@ public class Adduser extends JFrame {
 				String aa = textField_1.getText();
 				String bb = textField.getText();
 				String cc = passwordField.getText();
+				textField_1.setText("");
+				textField.setText("");
+				passwordField.setText("");
+				
 				
 				String q1 = "insert into staff Values(\"";
 				String t = q1 +aa+"\",\""+bb+"\",\""+cc+"\");";
@@ -105,7 +109,7 @@ public class Adduser extends JFrame {
 					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
 					Statement myStmt = myConn.createStatement();
 					 myStmt.executeUpdate(t);
-				//	System.out.println("");
+					System.out.println("User successfully added");
 				}
 				catch(Exception ax)
 				{

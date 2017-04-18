@@ -55,7 +55,7 @@ public class Removeuser extends JFrame {
 	 * Create the frame.
 	 */
 	public Removeuser() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 533, 504);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -67,10 +67,10 @@ public class Removeuser extends JFrame {
 		panel.setBounds(0, 0, 520, 441);
 		contentPane.add(panel);
 		
-		JLabel label = new JLabel("Username");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label.setBounds(131, 113, 94, 25);
-		panel.add(label);
+		JLabel lblUserId = new JLabel("User ID");
+		lblUserId.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUserId.setBounds(131, 113, 94, 25);
+		panel.add(lblUserId);
 		
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -85,11 +85,13 @@ public class Removeuser extends JFrame {
 				
 				String q2 = "delete from staff where id=";
 				String bb=textField.getText();
+				textField.setText("");
 				String t=q2+bb;
 				try{
 					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
 					Statement myStmt = myConn.createStatement();
 					int j=myStmt.executeUpdate(t);
+					System.out.println("User successfully removed");
 				}
 				catch(Exception bx){
 					System.out.println(bx.toString());

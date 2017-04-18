@@ -43,7 +43,7 @@ public class Changepwd extends JFrame {
 	 * Create the frame.
 	 */
 	public Changepwd() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,36 +84,39 @@ public class Changepwd extends JFrame {
 				String a=textField.getText();
 				String b=textField_1.getText();
 				String c=textField_2.getText();
-				
+				textField.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
 				int g =Integer.valueOf(a);
 				int f =Integer.valueOf(b);
 				
-				String t ="UPDATE staff SET PASSWORD = \"" +c+ "\"WHERE ID =\"" + a + "\";";
+				String t ="UPDATE staff SET PASSWORD = \"" +c+ "\"WHERE ID =\"" + g + "\";";
 				
 				try
 				{
 					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
 					Statement myStmt = myConn.createStatement();
 					ResultSet rs = myStmt.executeQuery("select * from staff;");
-
+					int flag=0;
 					while (rs.next())
 					{
 						if (rs.getInt(1)==(g) && rs.getInt(3)==(f)){
 							
 							 myStmt.executeUpdate(t);	
-						
+							 flag=1;
 							 System.out.println("Password changed!");
 						
 						}
-						else
-							System.out.println("incorrect id or password");
-						break;
+					
+					}
+					if(flag==0){
+						System.out.println("Incorrect id or password");
 					}
 					
 				}
 				catch(SQLException cx)
 				{
-					System.out.println(cx.toString());
+					//System.out.println(cx.toString());
 				}
 
 				
@@ -123,10 +126,6 @@ public class Changepwd extends JFrame {
 		});
 		btnConfirm.setBounds(143, 202, 89, 23);
 		contentPane.add(btnConfirm);
-		
-		JButton btnBack = new JButton("Back");
-		btnBack.setBounds(268, 202, 89, 23);
-		contentPane.add(btnBack);
 	}
 
 	protected void showMessageDialog(Object object, String string) {

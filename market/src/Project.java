@@ -86,6 +86,8 @@ public class Project {
 				int d =Integer.valueOf(a);
 				String b=passwordField.getText();
 				int e =Integer.valueOf(b);
+				textField.setText("");
+				passwordField.setText("");
 				try
 				{		
 					if(d==0000 && e==0000)
@@ -119,24 +121,27 @@ public class Project {
 				int d =Integer.valueOf(a);
 				String b=passwordField.getText();
 				int e =Integer.valueOf(b);
+				textField.setText("");
+				passwordField.setText("");
 				try
 				{
 					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "mysql");
 					Statement myStmt = myConn.createStatement();
 					ResultSet rs = myStmt.executeQuery("select * from staff;");
-				
+					int flag=0;
 					while (rs.next())
 					{
 						if (rs.getInt(1)==(d) && rs.getInt(3)==(e)){
 					
 							
-								frame.dispose();
+								flag=1;
 								Staff staff=new Staff();
 								staff.setVisible(true);
 						}
-						else
-							System.out.println("Invalid id or password!");
-						break;
+						
+					}
+					if(flag==0){
+						System.out.println("Invalid id or password!");
 					}
 				}
 				catch(SQLException cx)
